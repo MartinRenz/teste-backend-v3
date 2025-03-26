@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
 using ApprovalTests;
 using ApprovalTests.Reporters;
-using Xunit;
+using System.Collections.Generic;
 using TheatricalPlayersRefactoringKata.Core.Entities;
 using TheatricalPlayersRefactoringKata.Core.Enums;
 using TheatricalPlayersRefactoringKata.Presentation;
+using Xunit;
 
 namespace TheatricalPlayersRefactoringKata.Tests;
 
