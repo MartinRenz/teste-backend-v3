@@ -8,7 +8,7 @@ namespace TheatricalPlayersRefactoringKata.Presentation;
 
 public class StatementPrinter
 {
-    public string Print(Invoice invoice, Dictionary<string, Play> plays)
+    public string Print(Invoice invoice)
     {
         var totalAmount = 0;
         var volumeCredits = 0;
@@ -17,7 +17,7 @@ public class StatementPrinter
 
         foreach (var perf in invoice.Performances)
         {
-            var play = plays[perf.PlayId];
+            var play = perf.Play;
             var lines = play.Lines;
             if (lines < 1000) lines = 1000;
             if (lines > 4000) lines = 4000;
