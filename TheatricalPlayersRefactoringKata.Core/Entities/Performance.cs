@@ -1,7 +1,7 @@
 namespace TheatricalPlayersRefactoringKata.Core.Entities;
 
 /// <summary>
-/// Representa uma performance de teatro.
+/// Represents a theater performance.
 /// </summary>
 public class Performance
 {
@@ -9,12 +9,12 @@ public class Performance
     private int _audience;
 
     /// <summary>
-    /// Peça de teatro.
+    /// Theatrical play.
     /// </summary>
     public Play Play { get => _play; set => _play = value; }
 
     /// <summary>
-    /// Número de audiência na performance.
+    /// Audience number at the performance.
     /// </summary>
     public int Audience { get => _audience; set => _audience = value; }
 

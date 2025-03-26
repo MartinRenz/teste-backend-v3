@@ -1,7 +1,7 @@
 namespace TheatricalPlayersRefactoringKata.Core.Enums
 {
     /// <summary>
-    /// Representa os tipos de peças de teatro.
+    /// Represents the types of plays.
     /// </summary>
     public enum PlayType
     {

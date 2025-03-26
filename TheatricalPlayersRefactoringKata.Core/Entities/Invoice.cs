@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace TheatricalPlayersRefactoringKata.Core.Entities;
 
 /// <summary>
-/// Representa uma fatura de uma peça teatral.
+/// Represents an invoice for a theatrical play.
 /// </summary>
 public class Invoice
 {
@@ -11,12 +11,12 @@ public class Invoice
     private List<Performance> _performances;
 
     /// <summary>
-    /// Nome do cliente associado a fatura.
+    /// Customer name associated with invoice.
     /// </summary>
     public string Customer { get => _customer; set => _customer = value; }
 
     /// <summary>
-    /// Lista de performances associadas ao cliente.
+    /// List of performances associated with the customer.
     /// </summary>
     public List<Performance> Performances { get => _performances; set => _performances = value; }
 

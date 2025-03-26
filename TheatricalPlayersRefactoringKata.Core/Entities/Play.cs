@@ -4,7 +4,7 @@ using TheatricalPlayersRefactoringKata.Core.Enums;
 namespace TheatricalPlayersRefactoringKata.Core.Entities;
 
 /// <summary>
-/// Representa uma peça de teatro.
+/// Represents a theatrical play.
 /// </summary>
 public class Play
 {
@@ -13,12 +13,12 @@ public class Play
     private PlayType _type;
 
     /// <summary>
-    /// Nome da peça de teatro.
+    /// Name of the play.
     /// </summary>
     public string Name { get => _name; set => _name = value; }
 
     /// <summary>
-    /// Número de linhas no texto da peça de teatro.
+    /// Number of lines in the plays text.
     /// </summary>
     public int Lines
     {
@@ -27,7 +27,7 @@ public class Play
     }
 
     /// <summary>
-    /// Tipo de peça de teatro.
+    /// Type of play.
     /// </summary>
     public PlayType Type { get => _type; set => _type = value; }
 
