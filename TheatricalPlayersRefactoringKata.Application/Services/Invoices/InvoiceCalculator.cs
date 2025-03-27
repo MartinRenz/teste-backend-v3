@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using TheatricalPlayersRefactoringKata.Application.Services.Interfaces;
+using TheatricalPlayersRefactoringKata.Application.Services.Invoices.Interfaces;
 using TheatricalPlayersRefactoringKata.Core.Calculators;
 using TheatricalPlayersRefactoringKata.Core.Calculators.Interfaces;
 using TheatricalPlayersRefactoringKata.Core.Entities;
 using TheatricalPlayersRefactoringKata.Core.Enums;
 
-namespace TheatricalPlayersRefactoringKata.Application.Services;
+namespace TheatricalPlayersRefactoringKata.Application.Services.Invoices;
 
 /// <summary>
 /// Calculates invoice totals for theatrical performances.
@@ -25,10 +25,11 @@ public class InvoiceCalculator : IInvoiceCalculator
     /// Calculates the total amount and volume credits for an invoice.
     /// </summary>
     /// <param name="invoice"></param>
-    public (decimal TotalAmount, int VolumeCredits) CalculateStatement(Invoice invoice)
+    public InvoiceResult CalculateInvoice(Invoice invoice)
     {
         var totalAmount = 0m;
         var volumeCredits = 0;
+        var amounts = new List<decimal>();
 
         if (invoice == null)
             throw new ArgumentNullException("Invoice parameter cannot be null.");
@@ -42,10 +43,12 @@ public class InvoiceCalculator : IInvoiceCalculator
             if (!_calculators.TryGetValue(play.Type, out var calculator))
                 throw new InvalidOperationException($"Unknown play type: {play.Type}");
 
-            totalAmount += calculator.CalculateAmount(perf);
+            var thisAmount = calculator.CalculateAmount(perf);
+            amounts.Add(thisAmount);
+            totalAmount += thisAmount;
             volumeCredits += calculator.CalculateVolumeCredits(perf);
         }
 
-        return (totalAmount, volumeCredits);
+        return new InvoiceResult(totalAmount, volumeCredits, amounts);
     }
 }
