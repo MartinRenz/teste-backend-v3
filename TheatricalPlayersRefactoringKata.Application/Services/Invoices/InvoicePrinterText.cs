@@ -12,12 +12,12 @@ namespace TheatricalPlayersRefactoringKata.Application.Services.Invoices;
 /// <summary>
 /// Print the invoice totals for theatrical performances.
 /// </summary>
-public class InvoicePrinter : IInvoicePrinter
+public class InvoicePrinterText : IInvoicePrinter
 {
     private readonly IInvoiceCalculator _invoiceCalculator;
     private readonly CultureInfo _cultureInfo;
 
-    public InvoicePrinter(IInvoiceCalculator invoiceCalculator, CultureInfo cultureInfo = null)
+    public InvoicePrinterText(IInvoiceCalculator invoiceCalculator, CultureInfo cultureInfo = null)
     {
         _invoiceCalculator = invoiceCalculator ?? throw new ArgumentNullException("Invoice calculator cannot be null.");
         _cultureInfo = cultureInfo ?? CultureInfo.GetCultureInfo("en-US");
