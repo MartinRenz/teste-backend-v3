@@ -6,6 +6,7 @@ using TheatricalPlayersRefactoringKata.Core.Calculators;
 using TheatricalPlayersRefactoringKata.Core.Calculators.Interfaces;
 using TheatricalPlayersRefactoringKata.Core.Entities;
 using TheatricalPlayersRefactoringKata.Core.Enums;
+using TheatricalPlayersRefactoringKata.Core.Factories;
 
 namespace TheatricalPlayersRefactoringKata.Application.Services.Invoices;
 
@@ -14,13 +15,6 @@ namespace TheatricalPlayersRefactoringKata.Application.Services.Invoices;
 /// </summary>
 public class InvoiceCalculator : IInvoiceCalculator
 {
-    private readonly Dictionary<PlayType, IPlayTypeCalculator> _calculators;
-
-    public InvoiceCalculator(Dictionary<PlayType, IPlayTypeCalculator> calculators)
-    {
-        _calculators = calculators ?? throw new ArgumentNullException("Calculators dictionary cannot be null.");
-    }
-
     /// <summary>
     /// Calculates the total amount and volume credits for an invoice.
     /// </summary>
@@ -40,10 +34,10 @@ public class InvoiceCalculator : IInvoiceCalculator
         foreach (var perf in invoice.Performances)
         {
             var play = perf.Play;
-            if (!_calculators.TryGetValue(play.Type, out var calculator))
-                throw new InvalidOperationException($"Unknown play type: {play.Type}");
 
+            var calculator = PlayTypeCalculatorFactory.GetCalculator(play.Type);
             var thisAmount = calculator.CalculateAmount(perf);
+
             amounts.Add(thisAmount);
             totalAmount += thisAmount;
             volumeCredits += calculator.CalculateVolumeCredits(perf);
