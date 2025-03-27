@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TheatricalPlayersRefactoringKata.Core\TheatricalPlayersRefactoringKata.Core.csproj" />
     <ProjectReference Include="..\TheatricalPlayersRefactoringKata.Presentation\TheatricalPlayersRefactoringKata.Presentation.csproj" />
+    <ProjectReference Include="..\TheatricalPlayersRefactoringKata.Application\TheatricalPlayersRefactoringKata.Application.csproj" />
   </ItemGroup>
 
 </Project>
