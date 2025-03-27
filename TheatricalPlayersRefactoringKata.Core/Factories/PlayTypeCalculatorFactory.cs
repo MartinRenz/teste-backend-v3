@@ -20,6 +20,7 @@ public static class PlayTypeCalculatorFactory
     {
       PlayType.Comedy => new ComedyTypeCalculator(),
       PlayType.Tragedy => new TragedyTypeCalculator(),
+      PlayType.History => new HistoryTypeCalculator(),
       _ => throw new ArgumentException($"Unknown play type: {playType}")
     };
   }
