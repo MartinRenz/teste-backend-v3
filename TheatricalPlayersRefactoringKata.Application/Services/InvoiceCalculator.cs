@@ -34,7 +34,7 @@ public class InvoiceCalculator : IInvoiceCalculator
             throw new ArgumentNullException("Invoice parameter cannot be null.");
 
         if (invoice.Performances == null)
-            throw new ArgumentException("Performances collection cannot be null");
+            throw new ArgumentException("Performances collection cannot be null.");
 
         foreach (var perf in invoice.Performances)
         {
