@@ -71,4 +71,16 @@ public class InvoicePrinterTextTests
         var invoice = new Invoice("BigCo", null);
         Assert.Throws<ArgumentException>(() => _invoicePrinterText.Print(invoice));
     }
+
+    [Fact]
+    public void ShouldThrowArgumentException_WhenCustomerNameIsNullOrEmpty()
+    {
+        // Testing with null company name
+        var invoiceWithNullName = new Invoice(null, new List<Performance>());
+        Assert.Throws<ArgumentException>(() => _invoicePrinterText.Print(invoiceWithNullName));
+
+        // Testing with empty company name
+        var invoiceWithEmptyName = new Invoice(string.Empty, new List<Performance>());
+        Assert.Throws<ArgumentException>(() => _invoicePrinterText.Print(invoiceWithEmptyName));
+    }
 }

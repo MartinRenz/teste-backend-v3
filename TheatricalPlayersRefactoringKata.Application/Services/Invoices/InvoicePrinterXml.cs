@@ -36,6 +36,9 @@ public class InvoicePrinterXml : IInvoicePrinter
         if (invoice.Performances == null)
             throw new ArgumentException("Performances collection cannot be null.");
 
+        if (string.IsNullOrEmpty(invoice.Customer))
+            throw new ArgumentException("Customer name cannot be null or empty.");
+
         var invoiceResult = _invoiceCalculator.CalculateInvoice(invoice);
 
         var xmlDocument = new XDocument(

@@ -36,4 +36,29 @@ public class InvoicePrinterXmlTests
 
         Approvals.Verify(result);
     }
+
+    [Fact]
+    public void ShouldThrowArgumentNullException_WhenInvoiceIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => _invoicePrinterXml.Print(null));
+    }
+
+    [Fact]
+    public void ShouldThrowArgumentException_WhenPerformancesIsNull()
+    {
+        var invoice = new Invoice("BigCo", null);
+        Assert.Throws<ArgumentException>(() => _invoicePrinterXml.Print(invoice));
+    }
+
+    [Fact]
+    public void ShouldThrowArgumentException_WhenCustomerNameIsNullOrEmpty()
+    {
+        // Testing with null company name
+        var invoiceWithNullName = new Invoice(null, new List<Performance>());
+        Assert.Throws<ArgumentException>(() => _invoicePrinterXml.Print(invoiceWithNullName));
+
+        // Testing with empty company name
+        var invoiceWithEmptyName = new Invoice(string.Empty, new List<Performance>());
+        Assert.Throws<ArgumentException>(() => _invoicePrinterXml.Print(invoiceWithEmptyName));
+    }
 }

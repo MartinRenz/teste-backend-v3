@@ -35,6 +35,9 @@ public class InvoicePrinterText : IInvoicePrinter
         if (invoice.Performances == null)
             throw new ArgumentException("Performances collection cannot be null.");
 
+        if (string.IsNullOrEmpty(invoice.Customer))
+            throw new ArgumentException("Customer name cannot be null or empty.");
+
         var result = new StringBuilder();
         result.AppendLine($"Statement for {invoice.Customer}");
 

@@ -32,6 +32,9 @@ public class InvoiceCalculator : IInvoiceCalculator
         if (invoice.Performances == null)
             throw new ArgumentException("Performances collection cannot be null.");
 
+        if (string.IsNullOrEmpty(invoice.Customer))
+            throw new ArgumentException("Customer name cannot be null or empty.");
+
         foreach (var perf in invoice.Performances)
         {
             var play = perf.Play;
