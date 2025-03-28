@@ -45,7 +45,7 @@ public class InvoicePrinterXml : IInvoicePrinter
                 new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
                 new XElement("Customer", invoice.Customer),
                 CreateItemsElement(invoice, invoiceResult),
-                new XElement("AmountOwed", invoiceResult.TotalAmount),
+                new XElement("AmountOwed", FormatAmount(invoiceResult.TotalAmount)),
                 new XElement("EarnedCredits", invoiceResult.VolumeCredits)
             )
         );
@@ -69,11 +69,11 @@ public class InvoicePrinterXml : IInvoicePrinter
         {
             var perf = invoice.Performances[i];
             var thisAmount = invoiceResult.Amounts[i];
-            var thisCredit = invoiceResult.Amounts[i];
+            var thisCredit = invoiceResult.Credits[i];
 
             itemsElement.Add(
                 new XElement("Item",
-                    new XElement("AmountOwed", thisAmount),
+                    new XElement("AmountOwed", FormatAmount(thisAmount)),
                     new XElement("EarnedCredits", thisCredit),
                     new XElement("Seats", perf.Audience)
                 )
@@ -81,5 +81,11 @@ public class InvoicePrinterXml : IInvoicePrinter
         }
 
         return itemsElement;
+    }
+
+    private string FormatAmount(decimal amount)
+    {
+        var thisAmount = amount / 100m;
+        return thisAmount.ToString("0.00", _cultureInfo);
     }
 }
