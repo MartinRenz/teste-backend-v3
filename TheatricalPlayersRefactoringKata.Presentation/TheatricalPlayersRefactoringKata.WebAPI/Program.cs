@@ -1,7 +1,16 @@
+using System.Reflection;
 using TheatricalPlayersRefactoringKata.WebAPI.Services;
 using TheatricalPlayersRefactoringKata.WebAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add swagger configuration.
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+});
 
 // Add services to the container.
 

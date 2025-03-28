@@ -9,5 +9,20 @@ namespace TheatricalPlayersRefactoringKata.WebAPI.Services
     {
       throw new NotImplementedException();
     }
+
+    public Invoice GetInvoiceByCustomerName(string customerName)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Invoice CreateInvoice(Invoice newInvoice)
+    {
+      throw new NotImplementedException();
+    }
+
+    public bool DeleteInvoice(int invoiceId)
+    {
+      throw new NotImplementedException();
+    }
   }
 }
