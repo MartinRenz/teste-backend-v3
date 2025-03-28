@@ -4,20 +4,21 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using TheatricalPlayersRefactoringKata.Application.Services.Invoices.Interfaces;
 using TheatricalPlayersRefactoringKata.Core.Entities;
 
 namespace TheatricalPlayersRefactoringKata.Application.Services.Invoices;
 
 /// <summary>
-/// Print in text the invoice totals for theatrical performances.
+/// Print in XML the invoice totals for theatrical performances.
 /// </summary>
-public class InvoicePrinterText : IInvoicePrinter
+public class InvoicePrinterXml : IInvoicePrinter
 {
     private readonly IInvoiceCalculator _invoiceCalculator;
     private readonly CultureInfo _cultureInfo;
 
-    public InvoicePrinterText(IInvoiceCalculator invoiceCalculator, CultureInfo cultureInfo = null)
+    public InvoicePrinterXml(IInvoiceCalculator invoiceCalculator, CultureInfo cultureInfo = null)
     {
         _invoiceCalculator = invoiceCalculator ?? throw new ArgumentNullException("Invoice calculator cannot be null.");
         _cultureInfo = cultureInfo ?? CultureInfo.GetCultureInfo("en-US");
@@ -35,50 +36,50 @@ public class InvoicePrinterText : IInvoicePrinter
         if (invoice.Performances == null)
             throw new ArgumentException("Performances collection cannot be null.");
 
-        var result = new StringBuilder();
-        result.AppendLine($"Statement for {invoice.Customer}");
-
         var invoiceResult = _invoiceCalculator.CalculateInvoice(invoice);
 
-        AppendPerformanceLines(invoice, invoiceResult, result);
-        AppendFooter(invoiceResult, result);
+        var xmlDocument = new XDocument(
+            new XDeclaration("1.0", "utf-8", null),
+            new XElement("Statement",
+                new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
+                new XElement("Customer", invoice.Customer),
+                CreateItemsElement(invoice, invoiceResult),
+                new XElement("AmountOwed", invoiceResult.TotalAmount),
+                new XElement("EarnedCredits", invoiceResult.VolumeCredits)
+            )
+        );
 
-        return result.ToString();
+        return xmlDocument.ToString();
     }
 
     /// <summary>
-    /// Appends formatted performance lines amount into the StringBuilder.
+    /// Creates the Items element with the performance items
     /// </summary>
     /// <param name="invoice"></param>
     /// <param name="invoiceResult"></param>
-    /// <param name="result"></param>
-    private void AppendPerformanceLines(
-        Invoice invoice,
-        InvoiceResult invoiceResult,
-        StringBuilder result
-    )
+    private XElement CreateItemsElement(Invoice invoice, InvoiceResult invoiceResult)
     {
         if (invoiceResult.Amounts.Count != invoice.Performances.Count)
             throw new InvalidOperationException("Mismatch between performances and calculated amounts.");
 
+        var itemsElement = new XElement("Items");
+
         for (int i = 0; i < invoice.Performances.Count; i++)
         {
             var perf = invoice.Performances[i];
-            var play = perf.Play;
             var thisAmount = invoiceResult.Amounts[i];
+            var thisCredit = invoiceResult.Amounts[i];
 
-            result.AppendFormat(_cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, thisAmount / 100, perf.Audience);
+            itemsElement.Add(
+                new XElement("Item",
+                    new XElement("AmountOwed", thisAmount),
+                    new XElement("EarnedCredits", thisCredit),
+                    new XElement("Seats", perf.Audience)
+                )
+            );
         }
-    }
 
-    /// <summary>
-    /// Appends formatted total amount into the StringBuilder.
-    /// </summary>
-    /// <param name="invoiceResult"></param>
-    /// <param name="result"></param>
-    private void AppendFooter(InvoiceResult invoiceResult, StringBuilder result)
-    {
-        result.AppendFormat(_cultureInfo, "Amount owed is {0:C}\n", invoiceResult.TotalAmount / 100);
-        result.Append($"You earned {invoiceResult.VolumeCredits} credits\n");
+        return itemsElement;
     }
 }

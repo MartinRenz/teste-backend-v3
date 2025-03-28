@@ -24,6 +24,7 @@ public class InvoiceCalculator : IInvoiceCalculator
         var totalAmount = 0m;
         var volumeCredits = 0;
         var amounts = new List<decimal>();
+        var credits = new List<int>();
 
         if (invoice == null)
             throw new ArgumentNullException("Invoice parameter cannot be null.");
@@ -37,12 +38,14 @@ public class InvoiceCalculator : IInvoiceCalculator
 
             var calculator = PlayTypeCalculatorFactory.GetCalculator(play.Type);
             var thisAmount = calculator.CalculateAmount(perf);
-
             amounts.Add(thisAmount);
             totalAmount += thisAmount;
-            volumeCredits += calculator.CalculateVolumeCredits(perf);
+
+            var thisCredit = calculator.CalculateVolumeCredits(perf);
+            credits.Add(thisCredit);
+            volumeCredits += thisCredit;
         }
 
-        return new InvoiceResult(totalAmount, volumeCredits, amounts);
+        return new InvoiceResult(totalAmount, volumeCredits, amounts, credits);
     }
 }

@@ -13,6 +13,7 @@ public class InvoiceResult
     private decimal _totalAmount;
     private int _volumeCredits;
     private List<decimal> _amounts;
+    private List<int> _credits;
 
     /// <summary>
     /// Total amount of the invoice.
@@ -29,10 +30,22 @@ public class InvoiceResult
     /// </summary>
     public List<decimal> Amounts { get => _amounts; set => _amounts = value; }
 
-    public InvoiceResult(decimal totalAmount, int volumeCredits, List<decimal> amounts)
+    /// <summary>
+    /// List of all credits calculated.
+    /// </summary>
+    public List<int> Credits { get => _credits; set => _credits = value; }
+
+    public InvoiceResult
+    (
+        decimal totalAmount,
+        int volumeCredits,
+        List<decimal> amounts,
+        List<int> credits
+    )
     {
         this._totalAmount = totalAmount;
         this._volumeCredits = volumeCredits;
         this._amounts = amounts;
+        this._credits = credits;
     }
 }
