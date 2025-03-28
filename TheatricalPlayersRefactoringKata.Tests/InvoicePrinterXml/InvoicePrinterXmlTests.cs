@@ -29,6 +29,9 @@ public class InvoicePrinterXmlTests
                 new Performance(new Play("Hamlet", 4024, PlayType.Tragedy), 55),
                 new Performance(new Play("As You Like It", 2670, PlayType.Comedy), 35),
                 new Performance(new Play("Othello", 3560, PlayType.Tragedy), 40),
+                new Performance(new Play("Henry V", 3227, PlayType.History), 20),
+                new Performance(new Play("King John", 2648, PlayType.History), 39),
+                new Performance(new Play("Henry V", 3227, PlayType.History), 20)
             }
         );
 

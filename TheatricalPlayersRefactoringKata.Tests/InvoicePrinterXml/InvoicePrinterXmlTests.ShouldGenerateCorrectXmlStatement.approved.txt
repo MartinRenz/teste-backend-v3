@@ -16,7 +16,22 @@
       <EarnedCredits>10</EarnedCredits>
       <Seats>40</Seats>
     </Item>
+    <Item>
+      <AmountOwed>705.40</AmountOwed>
+      <EarnedCredits>0</EarnedCredits>
+      <Seats>20</Seats>
+    </Item>
+    <Item>
+      <AmountOwed>931.60</AmountOwed>
+      <EarnedCredits>9</EarnedCredits>
+      <Seats>39</Seats>
+    </Item>
+    <Item>
+      <AmountOwed>705.40</AmountOwed>
+      <EarnedCredits>0</EarnedCredits>
+      <Seats>20</Seats>
+    </Item>
   </Items>
-  <AmountOwed>1653.00</AmountOwed>
-  <EarnedCredits>47</EarnedCredits>
+  <AmountOwed>3995.40</AmountOwed>
+  <EarnedCredits>56</EarnedCredits>
 </Statement>
